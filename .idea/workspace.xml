@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ae88c204-bdfe-4332-8329-6e2baedcb9a7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.4" />
+  <component name="ProjectId" id="24xK2PQBaxyAAbw0Ra5uRLBcjot" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Casa\PhpstormProjects\ids" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\src\other" />
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\src\metar" />
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\src" />
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\img" />
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\onlineList" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ae88c204-bdfe-4332-8329-6e2baedcb9a7" name="Default Changelist" comment="" />
+      <created>1644566589284</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644566589284</updated>
+      <workItem from="1644566591572" duration="12262000" />
+      <workItem from="1644589921716" duration="6394000" />
+      <workItem from="1644601264220" duration="7980000" />
+      <workItem from="1644609411072" duration="1746000" />
+      <workItem from="1644611495914" duration="1195000" />
+      <workItem from="1644618526768" duration="2450000" />
+      <workItem from="1644675138942" duration="932000" />
+      <workItem from="1644676788809" duration="46000" />
+      <workItem from="1644680251881" duration="31000" />
+      <workItem from="1644681695174" duration="864000" />
+      <workItem from="1644686476863" duration="142000" />
+      <workItem from="1644688701048" duration="1803000" />
+      <workItem from="1645299547178" duration="967000" />
+      <workItem from="1645304206877" duration="4747000" />
+      <workItem from="1645310096121" duration="8279000" />
+      <workItem from="1645359508740" duration="1749000" />
+      <workItem from="1645362437316" duration="139000" />
+      <workItem from="1645362655149" duration="27000" />
+      <workItem from="1645362749197" duration="219000" />
+      <workItem from="1645366875898" duration="308000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="667" y="162" key="#PHP" timestamp="1644566694934">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="162" key="#PHP/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1644566694934" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1644572322906">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1644572322906" />
+    <state x="769" y="242" key="NewPhpClassDialog" timestamp="1644611504268">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="242" key="NewPhpClassDialog/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1644611504268" />
+    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1645315614307">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1645315614307" />
+  </component>
+</project>
