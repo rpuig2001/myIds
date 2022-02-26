@@ -5,9 +5,13 @@ $sec = "60";
 
 <!DOCTYPE html>
 <html>
-<meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<meta http-equiv="refresh" content="<?php echo $sec ?>;URL='<?php echo $page ?>'">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
 <body>
 
 </body>
@@ -21,7 +25,7 @@ $total = count($obj->pilots);
 
 ?>
 
-<div id="mapid" style="width: 100%; height: 600px;" ></div>
+<div id="mapid" style="width: 100%; height: 600px;"></div>
 <script>
 
     var mymap = L.map('mapid').setView([40, -5], 5);
@@ -37,8 +41,8 @@ $total = count($obj->pilots);
     <?php
     //Show Pilots
     if(isset($_SESSION['showFlights'])){
-        if($_SESSION['showFlights']){
-    for ($i = 0; $i<$total; $i++){
+    if($_SESSION['showFlights']){
+    for ($i = 0; $i < $total; $i++){
     if (isset($obj->pilots[$i]->flight_plan->route)){
     $aircraftShort = $obj->pilots[$i]->flight_plan->aircraft_short;
     $alt = $obj->pilots[$i]->altitude;
@@ -49,35 +53,43 @@ $total = count($obj->pilots);
     $latitude = $obj->pilots[$i]->latitude;
     $longitude = $obj->pilots[$i]->longitude;
     if($alt > 5000){
-    if ((substr($arrApt,0, 2) == "LE" || substr($arrApt, 0,2) == "GC") && (substr($depApt,0, 2) == "LE" || substr($depApt, 0,2) == "GC")){
+    if ((substr($arrApt, 0, 2) == "LE" || substr($arrApt, 0, 2) == "GC") && (substr($depApt, 0, 2) == "LE" || substr($depApt, 0, 2) == "GC")){
     ?>
     var planeIcon = L.icon({
-        iconUrl: 'img/inair/' + <?php echo $heading ?> + '.png',
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
         iconSize: [20, 20],
         shadowUrl: 'img/1.png',
         shadowSize: [20, 20]
     });
-    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br> <?php if(isset($adsb)){ echo $adsb; } ?>");
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
     <?php
-    }else if(substr($arrApt,0, 2) == "LE" || substr($arrApt, 0,2) == "GC"){
+    }else if(substr($arrApt, 0, 2) == "LE" || substr($arrApt, 0, 2) == "GC"){
     ?>
     var planeIcon = L.icon({
-        iconUrl: 'img/inair/' + <?php echo $heading ?> + '.png',
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
         iconSize: [20, 20],
         shadowUrl: 'img/2.png',
         shadowSize: [20, 20]
     });
-    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br> <?php if(isset($adsb)){ echo $adsb; } ?>");
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
     <?php
-    }else if(substr($depApt,0, 2) == "LE" || substr($depApt, 0,2) == "GC"){
+    }else if(substr($depApt, 0, 2) == "LE" || substr($depApt, 0, 2) == "GC"){
     ?>
     var planeIcon = L.icon({
-        iconUrl: 'img/inair/' + <?php echo $heading ?> + '.png',
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
         iconSize: [20, 20],
         shadowUrl: 'img/3.png',
         shadowSize: [20, 20]
     });
-    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br> <?php if(isset($adsb)){ echo $adsb; } ?>");
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
+    <?php
+    }else{
+    ?>
+    var planeIcon = L.icon({
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
+        iconSize: [20, 20]
+    });
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
     <?php
     }
     }
@@ -96,44 +108,44 @@ $csFound = false;
 
 
 $APTdata = [
-    ["LEBL",41.29849566021584, 2.0823312745475477, ["LECB_N_CTR", "LECB__N_CTR", "LECB_CTR", "LECB__CTR", "LECB_W_CTR", "LECB__W_CTR"]],
-    ["LEPA",39.55159728353086, 2.7357665968300964, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEIB",38.87281863487574, 1.3726221932860507, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEMH",39.86201314542871, 4.220840782777475, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEVC",39.48888155085828, -0.4784904826895333, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEAL",38.285619284879445, -0.5600421420040986, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEMI",37.80304782932502, -1.1296206330061471, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
-    ["LEZG",41.663116495467364, -1.0535474046214148, ["LECM_E_CTR", "LECM__E_CTR", "LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEBB",43.30215409511018, -2.911195633477415, ["LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEMD",40.49334937917182, -3.5691221402735853, ["LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEAS",43.56040894474824, -6.032427825147485, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LECO",43.30204376806028, -8.380789847148463, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEST",42.89750570977731, -8.418151195299636, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEVX",42.22493903594128, -8.631610113617091, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEMG",36.67728726066239, -4.492349668239185, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEZL",37.42106807858187, -5.897411355982313, ["LECS_W_CTR", "LECS__W_CTR", "LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEJR",37.18655321924685, -3.777069075709329, ["LECS_W_CTR", "LECS__W_CTR", "LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEGR",37.18667269837861, -3.7778297763717963, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["LEAM",36.845984297202065, -2.3717708217152675, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
-    ["GCRR",28.95087402180236, -13.606788465321847, ["GCCA_APP", "GCCA__APP", "GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCFV",28.45349245100724, -13.867399410541664, ["GCCA_APP", "GCCA__APP", "GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCLP",27.932098285017297, -15.389490697683046, ["GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCXO",28.486405410179337, -16.345628000082723, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCTS",28.046699192818465, -16.57649382427182, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCLA",28.62239463461159, -17.75383451266668, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]]];
+    ["LEBL", 41.29849566021584, 2.0823312745475477, ["LECB_N_CTR", "LECB__N_CTR", "LECB_CTR", "LECB__CTR", "LECB_W_CTR", "LECB__W_CTR"]],
+    ["LEPA", 39.55159728353086, 2.7357665968300964, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEIB", 38.87281863487574, 1.3726221932860507, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEMH", 39.86201314542871, 4.220840782777475, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEVC", 39.48888155085828, -0.4784904826895333, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEAL", 38.285619284879445, -0.5600421420040986, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEMI", 37.80304782932502, -1.1296206330061471, ["LECL_CTR", "LECL__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_CTR", "LECB__CTR"]],
+    ["LEZG", 41.663116495467364, -1.0535474046214148, ["LECM_E_CTR", "LECM__E_CTR", "LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEBB", 43.30215409511018, -2.911195633477415, ["LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEMD", 40.49334937917182, -3.5691221402735853, ["LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEAS", 43.56040894474824, -6.032427825147485, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LECO", 43.30204376806028, -8.380789847148463, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEST", 42.89750570977731, -8.418151195299636, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEVX", 42.22493903594128, -8.631610113617091, ["LECM_W_CTR", "LECM__W_CTR", "LECM_N_CTR", "LECM__N_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEMG", 36.67728726066239, -4.492349668239185, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEZL", 37.42106807858187, -5.897411355982313, ["LECS_W_CTR", "LECS__W_CTR", "LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEJR", 37.18655321924685, -3.777069075709329, ["LECS_W_CTR", "LECS__W_CTR", "LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEGR", 37.18667269837861, -3.7778297763717963, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["LEAM", 36.845984297202065, -2.3717708217152675, ["LECS_CTR", "LECS__CTR", "LECS_W_CTR", "LECS__W_CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]],
+    ["GCRR", 28.95087402180236, -13.606788465321847, ["GCCA_APP", "GCCA__APP", "GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCFV", 28.45349245100724, -13.867399410541664, ["GCCA_APP", "GCCA__APP", "GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCLP", 27.932098285017297, -15.389490697683046, ["GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCXO", 28.486405410179337, -16.345628000082723, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCTS", 28.046699192818465, -16.57649382427182, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCLA", 28.62239463461159, -17.75383451266668, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]]];
 $airportsToAdd = [];
 for ($i = 0; $i < sizeof($APTdata); $i++) {
     $positionsToAdd = [];
     for ($j = 0; $j < $total; $j++) {
-            if (substr($obj->controllers[$j]->callsign, 0, 4) == $APTdata[$i][0]) {
-                $callsign = $obj->controllers[$j]->callsign;
-                $frequecia = $obj->controllers[$j]->frequency;
-                array_push($positionsToAdd,[$callsign, $frequecia]);
-            }
+        if (substr($obj->controllers[$j]->callsign, 0, 4) == $APTdata[$i][0]) {
+            $callsign = $obj->controllers[$j]->callsign;
+            $frequecia = $obj->controllers[$j]->frequency;
+            array_push($positionsToAdd, [$callsign, $frequecia]);
+        }
     }
     for ($k = 0; $k < sizeof($APTdata[$i][3]); $k++) {
         $sectorFound = false;
-        if(!$sectorFound){
+        if (!$sectorFound) {
             for ($j = 0; $j < $total; $j++) {
                 if ($obj->controllers[$j]->callsign == $APTdata[$i][3][$k]) {
                     $sectorFound = true;
@@ -144,34 +156,34 @@ for ($i = 0; $i < sizeof($APTdata); $i++) {
             }
         }
     }
-    array_push($airportsToAdd,$positionsToAdd);
+    array_push($airportsToAdd, $positionsToAdd);
 }
 
 for ($i = 0; $i < sizeof($APTdata); $i++) {
-if(sizeof($airportsToAdd[$i]) > 0){
-    ?>
-    <script>
-        var planeIcon = L.icon({
-            iconUrl: '/ids/img/atc.png',
-            iconSize: [25, 25]
-        });
-        L.marker([<?php echo $APTdata[$i][1] ?>, <?php echo $APTdata[$i][2] ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<?php
-            ?> <center><b style=font-size:15px> <?php echo $APTdata[$i][0]?> </b></br> <?php
-            ?> <?php echo "------------------------------"?></br> <?php
-            if(sizeof($airportsToAdd[$i]) > 0){
+    if (sizeof($airportsToAdd[$i]) > 0) {
+        ?>
+        <script>
+            var planeIcon = L.icon({
+                iconUrl: '/ids/img/atc.png',
+                iconSize: [25, 25]
+            });
+            L.marker([<?php echo $APTdata[$i][1] ?>, <?php echo $APTdata[$i][2] ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<?php
+                ?> <center><b style=font-size:15px> <?php echo $APTdata[$i][0]?> </b></br> <?php
+                ?> <?php echo "------------------------------"?></br> <?php
+                if(sizeof($airportsToAdd[$i]) > 0){
                 for ($a = 0; $a < sizeof($airportsToAdd[$i]); $a++) {
-                    if(strlen($airportsToAdd[$i][$a][0]) >= 3){
-                        $lastLetters = substr($airportsToAdd[$i][$a][0],strlen($airportsToAdd[$i][$a][0])-3);
-                        if($lastLetters == "DEL" || $lastLetters == "GND" || $lastLetters == "TWR" || $lastLetters == "APP" || $lastLetters == "CTR"){
-                            ?> <b> <?php echo $airportsToAdd[$i][$a][0] ?></b> <?php echo " - ", $airportsToAdd[$i][$a][1];?><br /><?php
-                        }
-                    }
+                if(strlen($airportsToAdd[$i][$a][0]) >= 3){
+                $lastLetters = substr($airportsToAdd[$i][$a][0], strlen($airportsToAdd[$i][$a][0]) - 3);
+                if($lastLetters == "DEL" || $lastLetters == "GND" || $lastLetters == "TWR" || $lastLetters == "APP" || $lastLetters == "CTR"){
+                ?> <b> <?php echo $airportsToAdd[$i][$a][0] ?></b> <?php echo " - ", $airportsToAdd[$i][$a][1];?><br /><?php
                 }
-            }
-            ?></center>");
-    </script>
-    <?php
-}
+                }
+                }
+                }
+                ?></center>");
+        </script>
+        <?php
+    }
 }
 
 //Sectors
@@ -215,7 +227,7 @@ for ($i = 0; $i < sizeof($sectors); $i++) {
                     $sectorFound = true;
                     $sectorCoverage = $sectors[$i][$a];
                     $sectorFreq = $obj->controllers[$j]->frequency;
-                    switch ($i){
+                    switch ($i) {
                         case 0:
                             showPPI($sectorCoverage, $sectorFreq);
                             break;
@@ -265,7 +277,8 @@ for ($i = 0; $i < sizeof($sectors); $i++) {
         $sectorFound = false;
     }
 }
-function showPPI($sectorCoverage, $sectorFreq){
+function showPPI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -285,7 +298,8 @@ function showPPI($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showCCC($sectorCoverage, $sectorFreq){
+function showCCC($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -301,7 +315,9 @@ function showCCC($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showVNI($sectorCoverage, $sectorFreq){
+
+function showVNI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -316,7 +332,9 @@ function showVNI($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showMVS($sectorCoverage, $sectorFreq){
+
+function showMVS($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -335,7 +353,9 @@ function showMVS($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showLLI($sectorCoverage, $sectorFreq){
+
+function showLLI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -355,7 +375,9 @@ function showLLI($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showLECP($sectorCoverage, $sectorFreq){
+
+function showLECP($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -371,11 +393,13 @@ function showLECP($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showLECL($sectorCoverage, $sectorFreq){
+
+function showLECL($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
-            [40.0,-0.59722],
+            [40.0, -0.59722],
             [40.233333, -0.41388],
             [40.577778, -0.41388],
             [40.577778, 0.698611],
@@ -397,8 +421,10 @@ function showLECL($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
+
 //LECM
-function showSAI($sectorCoverage, $sectorFreq){
+function showSAI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -414,7 +440,9 @@ function showSAI($sectorCoverage, $sectorFreq){
     </script>
     <?php
 }
-function showBDP($sectorCoverage, $sectorFreq){
+
+function showBDP($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -437,7 +465,8 @@ function showBDP($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showZMI($sectorCoverage, $sectorFreq){
+function showZMI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -458,7 +487,8 @@ function showZMI($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showTLI($sectorCoverage, $sectorFreq){
+function showTLI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -481,7 +511,8 @@ function showTLI($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showCZI($sectorCoverage, $sectorFreq){
+function showCZI($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -498,7 +529,8 @@ function showCZI($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showSM2($sectorCoverage, $sectorFreq){
+function showSM2($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -522,7 +554,8 @@ function showSM2($sectorCoverage, $sectorFreq){
     <?php
 }
 
-function showNCS($sectorCoverage, $sectorFreq){
+function showNCS($sectorCoverage, $sectorFreq)
+{
     ?>
     <script>
         L.polygon([
@@ -639,7 +672,7 @@ if ($LPPCFound) {
         L.marker([39.53283857667809, -8.642212450131197], {icon: planeIcon}).addTo(mymap).bindPopup("LPPC ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -661,7 +694,7 @@ if ($LFRRFound) {
         L.marker([45.84482167556384, -5.595788115408225], {icon: planeIcon}).addTo(mymap).bindPopup("LFRR ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -683,7 +716,7 @@ if ($LFBBFound) {
         L.marker([43.538078565217546, 0.7975481931317071], {icon: planeIcon}).addTo(mymap).bindPopup("LFBB ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -705,7 +738,7 @@ if ($LFMMFound) {
         L.marker([41.0358666435354, 6.20515109961766], {icon: planeIcon}).addTo(mymap).bindPopup("LFMM ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -727,7 +760,7 @@ if ($DAAAFound) {
         L.marker([37.266719516865074, 1.8106916184962591], {icon: planeIcon}).addTo(mymap).bindPopup("DAAA ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -749,7 +782,7 @@ if ($GMMMFound) {
         L.marker([33.64095833354265, -6.292864896834501], {icon: planeIcon}).addTo(mymap).bindPopup("GMMM ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
@@ -771,7 +804,7 @@ if ($OCAFound) {
         L.marker([43.48265812564574, -15.093253133043753], {icon: planeIcon}).addTo(mymap).bindPopup("OCA ONLINE");
     </script>
     <?php
-}else{
+} else {
     ?>
     <script>
         var planeIcon = L.icon({
