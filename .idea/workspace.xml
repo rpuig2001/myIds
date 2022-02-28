@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae88c204-bdfe-4332-8329-6e2baedcb9a7" name="Default Changelist" comment="Added covered airport by CTR">
+    <list default="true" id="ae88c204-bdfe-4332-8329-6e2baedcb9a7" name="Default Changelist" comment="Show all flights">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/map/mapLEXX.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/map/mapLEXX.php" afterDir="false" />
     </list>
@@ -52,19 +52,20 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/img" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Casa\PhpstormProjects\ids" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Casa\PhpstormProjects\ids\src\other" />
       <recent name="C:\Users\Casa\PhpstormProjects\ids\src\metar" />
       <recent name="C:\Users\Casa\PhpstormProjects\ids\src" />
       <recent name="C:\Users\Casa\PhpstormProjects\ids\img" />
       <recent name="C:\Users\Casa\PhpstormProjects\ids\onlineList" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Casa\PhpstormProjects\ids\img" />
+      <recent name="C:\Users\Casa\PhpstormProjects\ids" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -97,7 +98,10 @@
       <workItem from="1645366875898" duration="308000" />
       <workItem from="1645658821733" duration="211000" />
       <workItem from="1645807234109" duration="318000" />
-      <workItem from="1645916447414" duration="2827000" />
+      <workItem from="1645916447414" duration="3235000" />
+      <workItem from="1645998233923" duration="963000" />
+      <workItem from="1646002464917" duration="600000" />
+      <workItem from="1646042427382" duration="7181000" />
     </task>
     <task id="LOCAL-00001" summary="Project Base">
       <created>1645658996113</created>
@@ -120,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645918778449</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Show all flights">
+      <created>1645919586332</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1645919586332</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,17 +153,18 @@
     <MESSAGE value="Project Base" />
     <MESSAGE value="Updated positions AIRAC2022" />
     <MESSAGE value="Added covered airport by CTR" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added covered airport by CTR" />
+    <MESSAGE value="Show all flights" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show all flights" />
   </component>
   <component name="WindowStateProjectService">
     <state x="667" y="162" key="#PHP" timestamp="1644566694934">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="667" y="162" key="#PHP/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1644566694934" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1644572322906">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1645998455619">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1644572322906" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1645998455619" />
     <state x="769" y="242" key="NewPhpClassDialog" timestamp="1644611504268">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -161,10 +173,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1645315614307" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1645918780214">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1645919587717">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1645918780214" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.5.1920.1040@0.0.1920.1040" timestamp="1645919587717" />
     <state x="761" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1645658899884">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

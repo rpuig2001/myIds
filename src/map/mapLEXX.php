@@ -24,8 +24,20 @@ $obj = json_decode($json);
 $total = count($obj->pilots);
 
 ?>
-
-<div id="mapid" style="width: 100%; height: 600px;"></div>
+<style>
+    .image1 {
+        position: relative;
+        margin: auto;
+    }
+    .image2 {
+        <!--position: absolute;-->
+        top: 40%;
+        margin: auto;
+    }
+</style>
+<div class="image1" id="mapid" style="width: 80%; height: 400px;"></div>
+<br />
+<div class="image2" id="mapCanarias" style="width: 70%; height: 250px"></div>
 <script>
 
     var mymap = L.map('mapid').setView([40, -5], 5);
@@ -36,7 +48,6 @@ $total = count($obj->pilots);
         tileSize: 512,
         zoomOffset: -1
     }).addTo(mymap);
-
 
     <?php
     //Show Pilots
@@ -100,13 +111,81 @@ $total = count($obj->pilots);
     ?>
 </script>
 
+<script>
+    var canariasmap = L.map('mapCanarias').setView([27.942959955628268, -15.549296628881995],5);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        id: 'mapbox/dark-v10',
+        tileSize: 512,
+        zoomOffset: -1
+    }).addTo(canariasmap);
+
+    <?php
+    //Show Pilots
+    if(isset($_SESSION['showFlights'])){
+    if($_SESSION['showFlights']){
+    for ($i = 0; $i < $total; $i++){
+    if (isset($obj->pilots[$i]->flight_plan->route)){
+    $aircraftShort = $obj->pilots[$i]->flight_plan->aircraft_short;
+    $alt = $obj->pilots[$i]->altitude;
+    $depApt = $obj->pilots[$i]->flight_plan->departure;
+    $arrApt = $obj->pilots[$i]->flight_plan->arrival;
+    $callsign = $obj->pilots[$i]->callsign;
+    $heading = $obj->pilots[$i]->heading;
+    $latitude = $obj->pilots[$i]->latitude;
+    $longitude = $obj->pilots[$i]->longitude;
+    if($alt > 5000){
+    if ((substr($arrApt, 0, 2) == "LE" || substr($arrApt, 0, 2) == "GC") && (substr($depApt, 0, 2) == "LE" || substr($depApt, 0, 2) == "GC")){
+    ?>
+    var planeIcon = L.icon({
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
+        iconSize: [20, 20],
+        shadowUrl: 'img/1.png',
+        shadowSize: [20, 20]
+    });
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(canariasmap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
+    <?php
+    }else if(substr($arrApt, 0, 2) == "LE" || substr($arrApt, 0, 2) == "GC"){
+    ?>
+    var planeIcon = L.icon({
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
+        iconSize: [20, 20],
+        shadowUrl: 'img/2.png',
+        shadowSize: [20, 20]
+    });
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(canariasmap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
+    <?php
+    }else if(substr($depApt, 0, 2) == "LE" || substr($depApt, 0, 2) == "GC"){
+    ?>
+    var planeIcon = L.icon({
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
+        iconSize: [20, 20],
+        shadowUrl: 'img/3.png',
+        shadowSize: [20, 20]
+    });
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(canariasmap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
+    <?php
+    }else{
+    ?>
+    var planeIcon = L.icon({
+        iconUrl: 'img/inair/' + <?php echo $heading ?> +'.png',
+        iconSize: [20, 20]
+    });
+    L.marker([<?php echo $latitude ?>, <?php echo $longitude ?>], {icon: planeIcon}).addTo(canariasmap).bindPopup("<b><?php echo $callsign ?></b> <?php echo " - ", $aircraftShort ?> <br> <?php echo $depApt, " - ", $arrApt ?> <br>");
+    <?php
+    }
+    }
+    }
+    }
+    }
+    }
+    ?>
+</script>
+
 <?php
-
-
 $total = count($obj->controllers);
 $csFound = false;
-
-
 $APTdata = [
     ["LEBL", 41.29849566021584, 2.0823312745475477, ["LECB_N_CTR", "LECB__N_CTR", "LECB_CTR", "LECB__CTR", "LECB_W_CTR", "LECB__W_CTR"]],
     ["LEPA", 39.55159728353086, 2.7357665968300964, ["LECP_CTR", "LECP__CTR", "LECB_S_CTR", "LECB__S_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR"]],
@@ -132,7 +211,10 @@ $APTdata = [
     ["GCLP", 27.932098285017297, -15.389490697683046, ["GCCC_E_CTR", "GCCC__E_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
     ["GCXO", 28.486405410179337, -16.345628000082723, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
     ["GCTS", 28.046699192818465, -16.57649382427182, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
-    ["GCLA", 28.62239463461159, -17.75383451266668, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]]];
+    ["GCLA", 28.62239463461159, -17.75383451266668, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCHI", 27.81371465285121, -17.885663299950103, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]],
+    ["GCGM", 28.031242977747418, -17.21204576921532, ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]]
+];
 $airportsToAdd = [];
 for ($i = 0; $i < sizeof($APTdata); $i++) {
     $positionsToAdd = [];
@@ -161,36 +243,55 @@ for ($i = 0; $i < sizeof($APTdata); $i++) {
 
 for ($i = 0; $i < sizeof($APTdata); $i++) {
     if (sizeof($airportsToAdd[$i]) > 0) {
-        ?>
-        <script>
-            var planeIcon = L.icon({
-                iconUrl: '/ids/img/atc.png',
-                iconSize: [25, 25]
-            });
-            L.marker([<?php echo $APTdata[$i][1] ?>, <?php echo $APTdata[$i][2] ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<?php
-                ?> <center><b style=font-size:15px> <?php echo $APTdata[$i][0]?> </b></br> <?php
-                ?> <?php echo "------------------------------"?></br> <?php
-                if(sizeof($airportsToAdd[$i]) > 0){
-                for ($a = 0; $a < sizeof($airportsToAdd[$i]); $a++) {
-                if(strlen($airportsToAdd[$i][$a][0]) >= 3){
-                $lastLetters = substr($airportsToAdd[$i][$a][0], strlen($airportsToAdd[$i][$a][0]) - 3);
-                if($lastLetters == "DEL" || $lastLetters == "GND" || $lastLetters == "TWR" || $lastLetters == "APP" || $lastLetters == "CTR"){
-                ?> <b> <?php echo $airportsToAdd[$i][$a][0] ?></b> <?php echo " - ", $airportsToAdd[$i][$a][1];?><br /><?php
-                }
-                }
-                }
-                }
-                ?></center>");
-        </script>
-        <?php
+        if(substr($APTdata[$i][0], 0, 2) == "GC"){
+            ?>
+            <script>
+                var planeIcon = L.icon({
+                    iconUrl: '/ids/img/atc.png',
+                    iconSize: [25, 25]
+                });
+                L.marker([<?php echo $APTdata[$i][1] ?>, <?php echo $APTdata[$i][2] ?>], {icon: planeIcon}).addTo(canariasmap).bindPopup("<?php
+                    ?> <center><b style=font-size:15px> <?php echo $APTdata[$i][0]?> </b></br> <?php
+                    ?> <?php echo "------------------------------"?></br> <?php
+                    if(sizeof($airportsToAdd[$i]) > 0){
+                    for ($a = 0; $a < sizeof($airportsToAdd[$i]); $a++) {
+                    if(strlen($airportsToAdd[$i][$a][0]) >= 3){
+                    $lastLetters = substr($airportsToAdd[$i][$a][0], strlen($airportsToAdd[$i][$a][0]) - 3);
+                    if($lastLetters == "DEL" || $lastLetters == "GND" || $lastLetters == "TWR" || $lastLetters == "APP" || $lastLetters == "CTR"){
+                    ?> <b> <?php echo $airportsToAdd[$i][$a][0] ?></b> <?php echo " - ", $airportsToAdd[$i][$a][1];?><br /><?php
+                    }
+                    }
+                    }
+                    }
+                    ?></center>");
+            </script>
+            <?php
+        }else{
+            ?>
+            <script>
+                var planeIcon = L.icon({
+                    iconUrl: '/ids/img/atc.png',
+                    iconSize: [25, 25]
+                });
+                L.marker([<?php echo $APTdata[$i][1] ?>, <?php echo $APTdata[$i][2] ?>], {icon: planeIcon}).addTo(mymap).bindPopup("<?php
+                    ?> <center><b style=font-size:15px> <?php echo $APTdata[$i][0]?> </b></br> <?php
+                    ?> <?php echo "------------------------------"?></br> <?php
+                    if(sizeof($airportsToAdd[$i]) > 0){
+                    for ($a = 0; $a < sizeof($airportsToAdd[$i]); $a++) {
+                    if(strlen($airportsToAdd[$i][$a][0]) >= 3){
+                    $lastLetters = substr($airportsToAdd[$i][$a][0], strlen($airportsToAdd[$i][$a][0]) - 3);
+                    if($lastLetters == "DEL" || $lastLetters == "GND" || $lastLetters == "TWR" || $lastLetters == "APP" || $lastLetters == "CTR"){
+                    ?> <b> <?php echo $airportsToAdd[$i][$a][0] ?></b> <?php echo " - ", $airportsToAdd[$i][$a][1];?><br /><?php
+                    }
+                    }
+                    }
+                    }
+                    ?></center>");
+            </script>
+            <?php
+        }
     }
 }
-
-//Sectors
-//LECB
-/*
- * 0:PPI|1:CCC|2:VNI|3:MVS|4:LLI|5:LECP|6:LECL|7:SAI|8:BDP|9:ZMI|10:TLI|11:CZI|12:SM2|13:NCS
-*/
 
 $sectors = [["LECB_CTR", "LECB__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_N_CTR", "LECB__N_CTR"],
     ["LECB_C_CTR", "LECB__C_CTR", "LECB_E_CTR", "LECB__E_CTR", "LECB_CTR", "LECB__CTR", "LECB_N_CTR", "LECB__N_CTR"],
@@ -205,7 +306,11 @@ $sectors = [["LECB_CTR", "LECB__CTR", "LECB_W_CTR", "LECB__W_CTR", "LECB_N_CTR",
     ["LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"],
     ["LECM_E_CTR", "LECM__E_CTR", "LECM_C_CTR", "LECM__C_CTR", "LECM_CTR", "LECM__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"],
     ["LECS_W_CTR", "LECS__W_CTR", "LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"],
-    ["LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"]];
+    ["LECS_CTR", "LECS__CTR", "LECM_ALL_CTR", "LECM__ALL_CTR"],
+    ["GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"],
+    ["GCCC_E_CTR", "GCCC__E_CTR",  "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"],
+    ["GCCO_CTR", "GCCO__CTR", "GCCC_CTR", "GCCC__CTR"],
+    ["GCCC_L_CTR", "GCCC__L_CTR", "GCCC_I_CTR", "GCCC__I_CTR", "GCCC_CTR", "GCCC__CTR"]];
 
 //Others
 $LPPC = ["LPPC__CTR", "LPPC_CTR", "LPPC_C_CTR", "LPPC_D_CTR", "LPPC_E_CTR", "LPPC_I_CTR", "LPPC_L_CTR", "LPPC_N_CTR", "LPPC_O_CTR", "LPPC_S_CTR", "LPPC_W_CTR", "EURW_FSS", "EURW__FSS"];
@@ -215,6 +320,9 @@ $LFMM = ["LFMM__CTR", "LFMM_CTR", "LFMM_E_CTR", "LFMM_N_CTR", "LFMM_S_CTR", "EUR
 $DAAA = ["DAAA__CTR", "DAAA_CTR", "DAAA_C_CTR", "DAAA_E_CTR", "DAAA_S_CTR", "DAAA_W_CTR"];
 $GMMM = ["GMMM__CTR", "GMMM_CTR", "GMMM_E_CTR", "GMMM_N_CTR", "GMMM_S_CTR"];
 $OCA = ["EGGX__CTR", "NAT__FSS", "EGGX_CTR", "NAT_FSS", "EGGX_A_CTR", "EGGX_B_CTR", "EGGX_C_CTR", "EGGX_D_CTR", "EGGX_F_CTR"];
+$LPPO = ["LPPO_CTR"];
+$GVSC = ["GVSC_CTR"];
+$GOOO = ["GOOO_CTR"];
 
 for ($i = 0; $i < sizeof($sectors); $i++) {
     $sectorFound = false;
@@ -269,6 +377,18 @@ for ($i = 0; $i < sizeof($sectors); $i++) {
                             break;
                         case 13:
                             showNCS($sectorCoverage, $sectorFreq);
+                            break;
+                        case 14:
+                            showRW3($sectorCoverage, $sectorFreq);
+                            break;
+                        case 15:
+                            showRES($sectorCoverage, $sectorFreq);
+                            break;
+                        case 16:
+                            showOCE($sectorCoverage, $sectorFreq);
+                            break;
+                        case 17:
+                            showINB($sectorCoverage, $sectorFreq);
                             break;
                     }
                 }
@@ -590,6 +710,99 @@ function showNCS($sectorCoverage, $sectorFreq)
     <?php
 }
 
+function showRW3($sectorCoverage, $sectorFreq)
+{
+    ?>
+    <script>
+        L.polygon([
+            [27.509, -19.659],
+            [27.509, -16.001],
+            [27.679, -16.001],
+            [28.092, -15.418],
+            [30.686, -14.018],
+            [31.504, -15.753],
+            [31.425, -16.050],
+            [31.406, -16.434],
+            [31.415, -16.616],
+            [31.476, -16.945],
+            [31.696, -17.467],
+            [30.022, -20.016],
+            [30.017, -20.390],
+            [28.450, -20.395],
+            [28.053, -19.664]
+        ]).addTo(canariasmap).bindPopup("<b><?= $sectorCoverage; ?></b> (<?= $sectorFreq; ?>)");
+    </script>
+    <?php
+}
+
+function showRES($sectorCoverage, $sectorFreq)
+{
+    ?>
+    <script>
+        L.polygon([
+            [27.509, -19.659],
+            [27.509, -16.001],
+            [27.679, -16.001],
+            [28.092, -15.418],
+            [30.686, -14.018],
+            [29.989, -12.529],
+            [28.242, -13.023],
+            [24.922, -15.572],
+            [24.932, -17.934],
+            [27.006, -19.681]
+        ]).addTo(canariasmap).bindPopup("<b><?= $sectorCoverage; ?></b> (<?= $sectorFreq; ?>)");
+    </script>
+    <?php
+}
+
+function showOCE($sectorCoverage, $sectorFreq)
+{
+    ?>
+    <script>
+        L.polygon([
+           [30.036, -20.406],
+           [29.979, -25.042],
+           [24.032, -24.976],
+           [19.026, -19.044],
+           [20.824, -17.066],
+           [21.357, -16.934],
+           [21.398, -13.001],
+           [22.883, -13.199],
+           [23.166, -13.089],
+           [23.469, -12.716],
+           [23.550, -12.276],
+           [23.489, -11.969],
+           [25.983, -11.991],
+           [26.062, -8.695],
+           [27.709, -8.673],
+           [27.679,-13.172],
+           [28.242, -13.023],
+           [24.922, -15.572],
+           [24.932, -17.934],
+           [27.006, -19.681],
+           [28.053, -19.692],
+           [28.455, -20.412]
+        ]).addTo(canariasmap).bindPopup("<b><?= $sectorCoverage; ?></b> (<?= $sectorFreq; ?>)");
+    </script>
+    <?php
+}
+
+function showINB($sectorCoverage, $sectorFreq)
+{
+    ?>
+    <script>
+        L.polygon([
+            [27.514, -19.011],
+            [27.514, -16.001],
+            [27.665, -16.006],
+            [28.082, -15.435],
+            [29.994, -15.281],
+            [30.003, -17.786]
+        ]).addTo(canariasmap).bindPopup("<b><?= $sectorCoverage; ?></b> (<?= $sectorFreq; ?>) <br /> FL245-");
+    </script>
+    <?php
+}
+
 //BOUNDARY SECTORS
 $LPPCFound = false;
 for ($i = 0; $i < sizeof($LPPC); $i++) {
@@ -661,6 +874,36 @@ for ($i = 0; $i < sizeof($OCA); $i++) {
         }
     }
 }
+$LPPOFound = false;
+for ($i = 0; $i < sizeof($LPPO); $i++) {
+    for ($j = 0; $j < $total; $j++) {
+        if (!$LPPOFound) {
+            if ($obj->controllers[$j]->callsign == $LPPO[$i]) {
+                $LPPOFound = true;
+            }
+        }
+    }
+}
+$GVSCFound = false;
+for ($i = 0; $i < sizeof($GVSC); $i++) {
+    for ($j = 0; $j < $total; $j++) {
+        if (!$GVSCFound) {
+            if ($obj->controllers[$j]->callsign == $GVSC[$i]) {
+                $GVSCFound = true;
+            }
+        }
+    }
+}
+$GOOOFound = false;
+for ($i = 0; $i < sizeof($GOOO); $i++) {
+    for ($j = 0; $j < $total; $j++) {
+        if (!$GOOOFound) {
+            if ($obj->controllers[$j]->callsign == $GOOO[$i]) {
+                $GOOOFound = true;
+            }
+        }
+    }
+}
 
 if ($LPPCFound) {
     ?>
@@ -671,6 +914,13 @@ if ($LPPCFound) {
         });
         L.marker([39.53283857667809, -8.642212450131197], {icon: planeIcon}).addTo(mymap).bindPopup("LPPC ONLINE");
     </script>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/lppc-on.png',
+            iconSize: [50, 20]
+        });
+        L.marker([31.928, -16.832], {icon: planeIcon}).addTo(canariasmap).bindPopup("LPPC ONLINE");
+    </script>
     <?php
 } else {
     ?>
@@ -680,6 +930,13 @@ if ($LPPCFound) {
             iconSize: [50, 20]
         });
         L.marker([39.53283857667809, -8.642212450131197], {icon: planeIcon}).addTo(mymap).bindPopup("LPPC OFFLINE");
+    </script>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/lppc-off.png',
+            iconSize: [50, 20]
+        });
+        L.marker([31.928, -16.832], {icon: planeIcon}).addTo(canariasmap).bindPopup("LPPC OFFLINE");
     </script>
     <?php
 }
@@ -781,6 +1038,13 @@ if ($GMMMFound) {
         });
         L.marker([33.64095833354265, -6.292864896834501], {icon: planeIcon}).addTo(mymap).bindPopup("GMMM ONLINE");
     </script>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gmmm-on.png',
+            iconSize: [50, 20]
+        });
+        L.marker([29.587028479041656, -10.052644049307542], {icon: planeIcon}).addTo(canariasmap).bindPopup("GMMM ONLINE");
+    </script>
     <?php
 } else {
     ?>
@@ -790,6 +1054,13 @@ if ($GMMMFound) {
             iconSize: [50, 20]
         });
         L.marker([33.64095833354265, -6.292864896834501], {icon: planeIcon}).addTo(mymap).bindPopup("GMMM OFFLINE");
+    </script>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gmmm-off.png',
+            iconSize: [50, 20]
+        });
+        L.marker([29.587028479041656, -10.052644049307542], {icon: planeIcon}).addTo(canariasmap).bindPopup("GMMM OFFLINE");
     </script>
     <?php
 }
@@ -812,6 +1083,72 @@ if ($OCAFound) {
             iconSize: [40, 20]
         });
         L.marker([43.48265812564574, -15.093253133043753], {icon: planeIcon}).addTo(mymap).bindPopup("OCA OFFLINE");
+    </script>
+    <?php
+}
+
+if ($LPPOFound) {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/lppo-on.png',
+            iconSize: [40, 20]
+        });
+        L.marker([29.540338967025257, -20.243386117414637], {icon: planeIcon}).addTo(canariasmap).bindPopup("LPPO ONLINE");
+    </script>
+    <?php
+} else {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/lppo-off.png',
+            iconSize: [40, 20]
+        });
+        L.marker([29.540338967025257, -22.243386117414637], {icon: planeIcon}).addTo(canariasmap).bindPopup("LPPO OFFLINE");
+    </script>
+    <?php
+}
+
+if ($GOOOFound) {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gooo-on.png',
+            iconSize: [40, 20]
+        });
+        L.marker([29.540338967025257, -20.243386117414637], {icon: planeIcon}).addTo(canariasmap).bindPopup("GOOO ONLINE");
+    </script>
+    <?php
+} else {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gooo-off.png',
+            iconSize: [40, 20]
+        });
+        L.marker([25.070738264978723, -10.418866388642003], {icon: planeIcon}).addTo(canariasmap).bindPopup("GOOO OFFLINE");
+    </script>
+    <?php
+}
+
+if ($GVSCFound) {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gvsc-on.png',
+            iconSize: [40, 20]
+        });
+        L.marker([21.794, -25.699], {icon: planeIcon}).addTo(canariasmap).bindPopup("GVSC ONLINE");
+    </script>
+    <?php
+} else {
+    ?>
+    <script>
+        var planeIcon = L.icon({
+            iconUrl: '/ids/img/controllerStatus/gvsc-off.png',
+            iconSize: [40, 20]
+        });
+        L.marker([21.794, -25.699], {icon: planeIcon}).addTo(canariasmap).bindPopup("GVSC OFFLINE");
     </script>
     <?php
 }
